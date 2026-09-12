@@ -1,0 +1,24 @@
+{
+  "name": "berry-busy",
+  "version": "1.0.0",
+  "description": "desktop pomodoro widget",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron ."
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/tt1ffany/berry-busy.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/tt1ffany/berry-busy/issues"
+  },
+  "homepage": "https://github.com/tt1ffany/berry-busy#readme",
+  "devDependencies": {
+    "electron": "^44.3.0",
+    "electron-reload": "^2.0.0-alpha.1"
+  }
+}
