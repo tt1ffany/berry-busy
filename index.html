@@ -1,14 +1,41 @@
-<!DOCTYPE html>
+<!doctype html>
 <html>
-    <head>
-        <meta charset="UTF-8">
-        <title>Berry Busy</title>
-        <link rel="stylesheet" href="styles.css">
-    </head>
-    <body>
-        <h1>Berry Busy</h1>
-        <p>Welcome to Berry Busy!</p>
+  <head>
+    <meta charset="UTF-8" />
+    <title>Berry Busy</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
 
-        <script src="renderer.js"></script>
-    </body>
+  <body>
+    <div id="widget-container">
+      <!-- Start Page -->
+      <div id="view-start" class="view-active">
+        <div id="storefront-bg">
+          <div id="bakery-door" onclick="showMenu()"></div>
+        </div>
+      </div>
+
+      <!-- Menu Page -->
+      <div id="view-menu" class="view-hidden">
+        <h2>What are we baking today?</h2>
+        <!-- catalogue grid here -->
+      </div>
+
+      <!-- Active Timer -->
+      <div id="view-timer" class="view-hidden">
+        <h2 id="phase-title">Mixing Ingredients...</h2>
+        <div id="time-display">25:00</div>
+        <button id="action-btn">Start</button>
+      </div>
+
+      <!-- 3rd Break Branching Page -->
+      <div id="view-branch" class="view-hidden">
+        <h2>What's next on the agenda?</h2>
+        <button onclick="makeChoice('cafe')">Stay in Cafe</button>
+        <button onclick="makeChoice('bake')">Back to Baking</button>
+      </div>
+    </div>
+
+    <script src="renderer.js"></script>
+  </body>
 </html>

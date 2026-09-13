@@ -3,4 +3,46 @@ body {
     width: 100%;
     height: 100%;
     margin: 0;
+    background: transparent;
+    overflow: hidden;
+}
+
+.view {
+    display: none;
+}
+
+.view.active {
+    display: flex;
+    flex-direction: column;
+}
+
+#storefront-bg {
+    width: 320px;
+    height: 320px;
+    image-rendering: pixelated;
+    background-image: url('assets/storefront-base.png');
+    background-size: cover;
+    position: relative;
+}
+
+#bakery-door {
+    -webkit-app-region: no-drag;
+    position: absolute;
+    bottom: 60px;
+    left: 175px;
+    width: 70px;
+    height: 100px;
+    background-image: url('assets/door-closed.png');
+    image-rendering: pixelated;
+    background-size: contain;
+    background-repeat: no-repeat;
+    cursor: pointer;
+}
+
+#bakery-door:hover {
+    background-image: url('assets/door-open.png');
+    image-rendering: pixelated;
+    bottom: 45px;
+    width: 65px;
+    height: 115px;
 }
