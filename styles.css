@@ -1,49 +1,155 @@
+@font-face {
+  font-family: "Pixeboy";
+  src: url("assets/fonts/Pixeboy.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+}
+
 body {
-    -webkit-app-region: drag;
-    width: 100%;
-    height: 100%;
-    margin: 0;
-    background: transparent;
-    overflow: hidden;
+  -webkit-app-region: drag;
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  background: transparent;
+  overflow: hidden;
+  font-family: Pixeboy;
 }
 
 .view {
-    display: none;
-    width: 100%;
-    height: 100%;
+  display: none;
+  width: 100%;
+  height: 100%;
 }
 
 .view.active {
-    display: block;
+  display: block;
 }
 
 #storefront-bg {
-    width: 320px;
-    height: 320px;
-    image-rendering: pixelated;
-    background-image: url('assets/storefront-base.png');
-    background-size: cover;
-    position: relative;
+  width: 320px;
+  height: 320px;
+  image-rendering: pixelated;
+  background-image: url("assets/storefront-base.png");
+  background-size: cover;
+  position: relative;
 }
 
 #bakery-door {
-    -webkit-app-region: no-drag;
-    position: absolute;
-    bottom: 60px;
-    left: 175px;
-    width: 70px;
-    height: 100px;
-    background-image: url('assets/door-closed.png');
-    image-rendering: pixelated;
-    background-size: contain;
-    background-repeat: no-repeat;
-    cursor: pointer;
+  -webkit-app-region: no-drag;
+  position: absolute;
+  bottom: 60px;
+  left: 175px;
+  width: 70px;
+  height: 100px;
+  background-image: url("assets/door-closed.png");
+  image-rendering: pixelated;
+  background-size: contain;
+  background-repeat: no-repeat;
+  cursor: pointer;
 }
 
 #bakery-door:hover {
-    background-image: url('assets/door-open.png');
-    image-rendering: pixelated;
-    bottom: 45px;
-    width: 65px;
-    height: 115px;
+  background-image: url("assets/door-open.png");
+  image-rendering: pixelated;
+  bottom: 45px;
+  width: 65px;
+  height: 115px;
+}
+
+#view-menu {
+  background-color: #eeeedc;
+  color: #2b1d19;
+}
+
+.menu-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 12px;
+}
+
+.menu-header h2 {
+  font-size: 24px;
+  margin: 0;
+  text-align: center;
+  flex-grow: 1;
+}
+
+.back-btn {
+  -webkit-app-region: no-drag;
+  background: #4a3228;
+  color: #f7e6c4;
+  border: 1px solid #6e4a3c;
+  padding: 4px 8px;
+  font-family: Pixeboy;
+  font-size: 12px;
+  cursor: pointer;
+  border-radius: 4px;
+}
+
+.back-btn:hover {
+  background: #6e4a3c;
+}
+
+.recipe-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+  max-height: 240px;
+  overflow-y: auto;
+}
+
+.recipe-card {
+  -webkit-app-region: no-drag;
+  background: #3a2720;
+  border: 2px solid #573c31;
+  border-radius: 6px;
+  padding: 8px 4px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  cursor: pointer;
+  transition:
+    transform 0.1s,
+    border-color 0.1s;
+}
+
+.recipe-card:hover {
+  transform: translateY(-2px);
+  border-color: #f7e6c4;
+  background: #4a3228;
+}
+
+/* Recipe Icon Placeholders */
+.recipe-icon {
+  width: 48px;
+  height: 48px;
+  background-color: #573c31; /* Temporary color block until image loads */
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+  image-rendering: pixelated;
+  margin-bottom: 6px;
+  border-radius: 4px;
+}
+
+/* Replace image paths once pixel art assets complete */
+.recipe-icon.croissant {
+  background-image: url("assets/croissant.png");
+}
+.recipe-icon.shortcake {
+  background-image: url("assets/baguette.png");
+}
+.recipe-icon.matcha {
+  background-image: url("assets/shortcake.png");
+}
+.recipe-icon.baguette {
+  background-image: url("assets/toast.png");
+}
+
+.recipe-name {
+  font-size: 14px;
+  font-weight: bold;
+  text-align: center;
+  color: #f7e6c4;
 }

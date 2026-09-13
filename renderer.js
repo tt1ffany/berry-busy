@@ -51,4 +51,13 @@ function selectRecipe(recipeName) {
   selectedItem = recipeName;
   currentStepIndex = 0;
   showView("view-timer");
+
+  if (typeof loadPhase === 'function') {
+    loadPhase();
+  }
+}
+
+// === Timer Engine Logic ===
+function loadPhase() {
+    
 }
