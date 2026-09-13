@@ -9,27 +9,27 @@
   <body>
     <div id="widget-container">
       <!-- Start Page -->
-      <div id="view-start" class="view-active">
+      <div id="view-start" class="view active">
         <div id="storefront-bg">
           <div id="bakery-door" onclick="showMenu()"></div>
         </div>
       </div>
 
       <!-- Menu Page -->
-      <div id="view-menu" class="view-hidden">
+      <div id="view-menu" class="view">
         <h2>What are we baking today?</h2>
         <!-- catalogue grid here -->
       </div>
 
       <!-- Active Timer -->
-      <div id="view-timer" class="view-hidden">
+      <div id="view-timer" class="view">
         <h2 id="phase-title">Mixing Ingredients...</h2>
         <div id="time-display">25:00</div>
         <button id="action-btn">Start</button>
       </div>
 
       <!-- 3rd Break Branching Page -->
-      <div id="view-branch" class="view-hidden">
+      <div id="view-branch" class="view">
         <h2>What's next on the agenda?</h2>
         <button onclick="makeChoice('cafe')">Stay in Cafe</button>
         <button onclick="makeChoice('bake')">Back to Baking</button>
