@@ -54,12 +54,37 @@
 
       <!-- Active Timer -->
       <div id="view-timer" class="view">
-        <button class="back-btn" onclick="showView('view-menu')">
-          ← Menu
-        </button>
-        <h2 id="phase-title">Mixing Ingredients...</h2>
-        <div id="time-display">25:00</div>
-        <button id="action-btn">Start</button>
+        <div class="timer-header">
+          <button class="back-btn" onclick="showView('view-menu')">
+            ← Menu
+          </button>
+          <span id="step-badge">Step 1/5</span>
+        </div>
+
+        <div class="timer-content">
+          <h2 id="phase-title">Mixing Ingredients...</h2>
+          <div id="selected-recipe-badge">Croissant</div>
+          <!-- illustration placeholder -->
+          <div id="phase-illustration"></div>
+          <div id="time-display">25:00</div>
+        </div>
+
+        <div class="timer-controls">
+          <button
+            id="action-btn"
+            class="timer-btn primary"
+            onclick="toggleTimer()"
+          >
+            Start
+          </button>
+          <button
+            id="skip-btn"
+            class="timer-btn secondary"
+            onclick="skipPhase()"
+          >
+            Skip ⏭
+          </button>
+        </div>
       </div>
 
       <!-- 3rd Break Branching Page -->

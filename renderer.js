@@ -9,6 +9,9 @@ const BAKING_JOURNEY = [
 
 let currentStepIndex = 0;
 let selectedItem = null;
+let timeRemaining = 0;
+let timerInterval = null;
+let isTimerRunning = false;
 
 // === View Management ===
 function showView(viewId) {
@@ -52,12 +55,103 @@ function selectRecipe(recipeName) {
   currentStepIndex = 0;
   showView("view-timer");
 
-  if (typeof loadPhase === 'function') {
+  if (typeof loadPhase === "function") {
     loadPhase();
   }
 }
 
 // === Timer Engine Logic ===
+// Populate title and reset timer duration for current phase
 function loadPhase() {
-    
+  const currentPhase = BAKING_JOURNEY[currentStepIndex];
+  console.log(
+    `[Timer] Loaded Phase ${currentStepIndex + 1}/${BAKING_JOURNEY.length}: ${currentPhase.name}`,
+  );
+
+  // Update UI Elements
+  document.getElementById("phase-title").innerText = currentPhase.name;
+  document.getElementById("selected-recipe-badge").innerText = selectedItem
+    ? `Recipe: ${selectedItem}`
+    : "";
+  document.getElementById("step-badge").innerText =
+    `Step ${currentStepIndex + 1}/${BAKING_JOURNEY.length}`;
+
+  // Set initial time
+  timeRemaining = currentPhase.minutes * 60;
+  updateDisplay();
+}
+
+// Format time display to MM:SS
+function updateDisplay() {
+  const minutes = Math.floor(timeRemaining / 60);
+  const seconds = timeRemaining % 60;
+  const timeDisplay = document.getElementById("time-display");
+
+  if (timeDisplay) {
+    timeDisplay.innerText = `${String(minutes).padStart(2, "0")}:${String(seconds).padStart(2, "0")}`;
+  }
+}
+
+function toggleTimer() {
+  if (isTimerRunning) {
+    pauseTimer();
+  } else {
+    startTimer();
+  }
+}
+
+function startTimer() {
+  isTimerRunning = true;
+  document.getElementById("action-btn").innerText = "Pause";
+  console.log("[Timer] Started.");
+
+  timerInterval = setInterval(() => {
+    if (timeRemaining > 0) {
+      timeRemaining--;
+      updateDisplay();
+    } else {
+      finishPhase();
+    }
+  }, 1000);
+}
+
+function pauseTimer() {
+  isTimerRunning = false;
+  clearInterval(timerInterval);
+  const actionBtn = document.getElementById("action-btn");
+  if (actionBtn) actionBtn.innerText = "Start";
+  console.log("[Timer] Paused.");
+}
+
+function skipPhase() {
+  console.log("[Timer] Phase skipped by user.");
+  pauseTimer();
+  advancePhase();
+}
+
+// Called when timer reaches 00:00
+function finishPhase() {
+  console.log("[Timer] Phase complete!");
+  pauseTimer();
+
+  // Play notification chime sound if available here
+
+  // Step index 4 corresponds to the 3rd work session ("Enjoy in Cafe")
+  if (currentStepIndex === 4) {
+    showView("view-branch");
+    return;
+  }
+
+  advancePhase();
+}
+
+function advancePhase() {
+  currentStepIndex++;
+  if (currentStepIndex < BAKING_JOURNEY.length) {
+    loadPhase();
+  } else {
+    // Loop reset
+    currentStepIndex = 0;
+    showView("view-menu");
+  }
 }

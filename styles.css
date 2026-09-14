@@ -25,6 +25,7 @@ body {
   display: block;
 }
 
+/* === START PAGE === */
 #storefront-bg {
   width: 320px;
   height: 320px;
@@ -56,6 +57,7 @@ body {
   height: 115px;
 }
 
+/* === MENU PAGE === */
 #view-menu {
   background-color: #eeeedc;
   color: #2b1d19;
@@ -152,4 +154,123 @@ body {
   font-weight: bold;
   text-align: center;
   color: #f7e6c4;
+}
+
+/* === TIMER PAGE === */
+#view-timer {
+  background-color: #eeeedc;
+  color: #2b1d19;
+  box-sizing: border-box;
+  padding: 14px;
+}
+
+#view-timer.active {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.timer-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+#step-badge {
+  -webkit-app-region: no-drag;
+  font-size: 10px;
+  background: #3a2720;
+  border: 1px solid #573c31;
+  padding: 3px 8px;
+  border-radius: 10px;
+  color: #e3b880;
+}
+
+.timer-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  margin-top: 2px;
+}
+
+#phase-title {
+  font-size: 15px;
+  margin: 0;
+  color: #fff3d6;
+}
+
+#selected-recipe-badge {
+  font-size: 11px;
+  color: #d4a373;
+  margin-top: 2px;
+  margin-bottom: 8px;
+}
+
+/* Illustration placeholder box */
+#phase-illustration {
+  width: 64px;
+  height: 64px;
+  background-color: #3a2720;
+  border: 2px solid #573c31;
+  border-radius: 8px;
+  margin-bottom: 6px;
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+  image-rendering: pixelated;
+}
+
+#time-display {
+  font-family: "Courier New", Courier, monospace;
+  font-size: 36px;
+  font-weight: bold;
+  letter-spacing: 2px;
+  color: #f7e6c4;
+  margin-bottom: 12px;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.4);
+}
+
+.timer-controls {
+  -webkit-app-region: no-drag;
+  display: flex;
+  gap: 12px;
+  width: 100%;
+  justify-content: center;
+}
+
+.timer-btn {
+  -webkit-app-region: no-drag;
+  border: none;
+  padding: 8px 18px;
+  font-size: 12px;
+  font-weight: bold;
+  border-radius: 6px;
+  cursor: pointer;
+  transition:
+    transform 0.1s,
+    background 0.1s;
+}
+
+.timer-btn:active {
+  transform: scale(0.95);
+}
+
+.timer-btn.primary {
+  background-color: #e07a5f;
+  color: #ffffff;
+  border: 1px solid #b85439;
+}
+
+.timer-btn.primary:hover {
+  background-color: #f2846b;
+}
+
+.timer-btn.secondary {
+  background-color: #4a3228;
+  color: #f7e6c4;
+  border: 1px solid #6e4a3c;
+}
+
+.timer-btn.secondary:hover {
+  background-color: #6e4a3c;
 }
