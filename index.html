@@ -55,7 +55,7 @@
       <!-- Active Timer -->
       <div id="view-timer" class="view">
         <div class="timer-header">
-          <button class="back-btn" onclick="showView('view-menu')">
+          <button class="back-btn" onclick="confirmExitTimer()">
             ← Menu
           </button>
           <span id="step-badge">Step 1/5</span>
@@ -105,6 +105,17 @@
               <span>☕</span>
               <span>Stay in Cafe</span>
             </button>
+          </div>
+        </div>
+      </div>
+
+      <div id="custom-modal" class="modal-overlay">
+        <div class="modal-box">
+          <h3>Leave Kitchen?</h3>
+          <p>Your current baking progress will <strong>reset</strong>.</p>
+          <div class="modal-buttons">
+            <button class="modal-btn secondary" onclick="closeModal()">Stay</button>
+            <button class="modal-btn primary" onclick="confirmExit()">Exit</button>
           </div>
         </div>
       </div>

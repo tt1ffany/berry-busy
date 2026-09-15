@@ -156,6 +156,35 @@ function advancePhase() {
   }
 }
 
+function confirmExitTimer() {
+  const currentPhase = BAKING_JOURNEY[currentStepIndex];
+  const totalSecondsForPhase = currentPhase.minutes * 60;
+  const hasProgress =
+    currentStepIndex > 0 ||
+    isTimerRunning ||
+    timeRemaining < totalSecondsForPhase;
+
+  if (hasProgress) {
+    console.log("[Modal] Active progress detected. Showing exit confirmation.");
+    document.getElementById("custom-modal").classList.add("active");
+  } else {
+    console.log("[Modal] No progress made yet. Returning to menu.");
+    showView("view-menu");
+  }
+}
+
+// User clicked "Stay" in the modal
+function closeModal() {
+  document.getElementById("custom-modal").classList.remove("active");
+}
+
+// User clicked "Exit in the modal"
+function confirmExit() {
+  document.getElementById("custom-modal").classList.remove("active");
+  pauseTimer();
+  showView("view-menu");
+}
+
 function makeChoice(choice) {
   console.log(`[Branch Choice] Selected: ${choice}`);
 
