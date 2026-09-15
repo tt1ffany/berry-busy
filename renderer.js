@@ -155,3 +155,32 @@ function advancePhase() {
     showView("view-menu");
   }
 }
+
+function makeChoice(choice) {
+  console.log(`[Branch Choice] Selected: ${choice}`);
+
+  if (choice === "bake") {
+    // Return to menu to select a new pastry
+    currentStepIndex = 0;
+    showView("view-menu");
+  } else if (choice === "cafe") {
+    // Dynamically append ongoing cafe focus and break phases
+    BAKING_JOURNEY.push(
+      {
+        id: `cafe_work_${BAKING_JOURNEY.length}`,
+        name: "Cafe Focus",
+        type: "work",
+        minutes: 25,
+      },
+      {
+        id: `cafe_break_${BAKING_JOURNEY.length}`,
+        name: "Sip Coffee",
+        type: "break",
+        minutes: 5,
+      },
+    );
+    currentStepIndex++;
+    showView("view-timer");
+    loadPhase();
+  }
+}

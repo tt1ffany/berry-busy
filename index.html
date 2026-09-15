@@ -89,9 +89,24 @@
 
       <!-- 3rd Break Branching Page -->
       <div id="view-branch" class="view">
-        <h2>What's next on the agenda?</h2>
-        <button onclick="makeChoice('cafe')">Stay in Cafe</button>
-        <button onclick="makeChoice('bake')">Back to Baking</button>
+        <div class="branch-content">
+          <h2>Freshly Baked! 🥐</h2>
+          <p>
+            You finished enjoying your treat. What would you like to do next?
+          </p>
+
+          <div class="branch-options">
+            <button class="branch-btn primary" onclick="makeChoice('bake')">
+              <span>👩‍🍳</span>
+              <span>Bake Something New</span>
+            </button>
+
+            <button class="branch-btn secondary" onclick="makeChoice('cafe')">
+              <span>☕</span>
+              <span>Stay in Cafe</span>
+            </button>
+          </div>
+        </div>
       </div>
     </div>
 
