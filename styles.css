@@ -139,17 +139,14 @@ body {
 }
 
 /* Replace image paths once pixel art assets complete */
-.recipe-icon.croissant {
-  background-image: url("assets/croissant.png");
+.recipe-icon.baguette {
+  background-image: url("assets/menu/baguette.png");
 }
 .recipe-icon.shortcake {
-  background-image: url("assets/baguette.png");
+  background-image: url("assets/menu/strawberry-cake.png");
 }
-.recipe-icon.matcha {
-  background-image: url("assets/shortcake.png");
-}
-.recipe-icon.baguette {
-  background-image: url("assets/toast.png");
+.recipe-icon.toast {
+  background-image: url("assets/menu/strawberry-toast.png");
 }
 
 .recipe-name {
@@ -199,7 +196,7 @@ body {
 #phase-title {
   font-size: 15px;
   margin: 0;
-  color: #fff3d6;
+  color: #3a2720;
 }
 
 #selected-recipe-badge {
