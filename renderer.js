@@ -1,3 +1,16 @@
+const RECIPES = [
+  { name: "Baguette", icon: "baguette" },
+  { name: "Shortcake", icon: "shortcake" },
+  { name: "Toast", icon: "toast" },
+  { name: "Croissant", icon: "croissant" },
+  { name: "Mochi Donut", icon: "mochi" },
+  { name: "Pistachio Cake", icon: "pistachiocake" },
+  { name: "Berry Tart", icon: "shortcake" },
+  { name: "Honey Toast", icon: "toast" },
+  { name: "French Bread", icon: "baguette" },
+]
+const RECIPES_PER_PAGE = 6;
+
 // Sequential baking journey
 const BAKING_JOURNEY = [
   { id: "mix", name: "Mixing Ingredients", type: "work", minutes: 25 },
@@ -7,13 +20,14 @@ const BAKING_JOURNEY = [
   { id: "enjoy", name: "Enjoy in Cafe", type: "work", minutes: 25 },
 ];
 
+let currentRecipePage = 1;
 let currentStepIndex = 0;
 let selectedItem = null;
 let timeRemaining = 0;
 let timerInterval = null;
 let isTimerRunning = false;
 
-// === View Management ===
+// === VIEW MANAGEMENT ===
 function showView(viewId) {
   console.log(`[View Manager] Attempting to display view: #${viewId}`);
 
@@ -42,10 +56,59 @@ function showView(viewId) {
   }
 }
 
+// === MENU RECIPE RETRIEVAL ===
 // Show menu (triggered by clicking storefront door)
 function showMenu() {
   console.log("[Interaction] Door clicked -> Executing showMenu()");
+  renderRecipePage();
   showView("view-menu");
+}
+
+function renderRecipePage() {
+  const grid = document.getElementById("recipe-grid");
+  const pageNumber = document.getElementById("page-number");
+  const previousButton = document.getElementById("prev-page");
+  const nextButton = document.getElementById("next-page");
+
+  const totalPages = Math.ceil(RECIPES.length / RECIPES_PER_PAGE);
+  
+  const startIndex = (currentRecipePage - 1) * RECIPES_PER_PAGE;
+  const visibleRecipes = RECIPES.slice(
+    startIndex,
+    startIndex + RECIPES_PER_PAGE,
+  );
+
+  grid.innerHTML = "";
+
+  visibleRecipes.forEach((recipe) => {
+    const card = document.createElement("div");
+    card.className = "recipe-card";
+    card.onclick = () => selectRecipe(recipe.name);
+
+    card.innerHTML = `
+      <div class="recipe-icon ${recipe.icon}"></div>
+      <span class="recipe-name">${recipe.name}</span>
+    `;
+
+    grid.appendChild(card);
+  });
+
+  pageNumber.innerText = `${currentRecipePage}/${totalPages}`;
+
+  previousButton.disabled = currentRecipePage === 1;
+  nextButton.disabled = currentRecipePage === totalPages;
+}
+
+function changeRecipePage(direction) {
+  const totalPages = Math.ceil(RECIPES.length / RECIPES_PER_PAGE);
+
+  currentRecipePage += direction;
+  currentRecipePage = Math.max(
+    1,
+    Math.min(currentRecipePage, totalPages),
+  );
+
+  renderRecipePage();
 }
 
 // Show timer (triggered when a recipe is selected from menu)
@@ -60,7 +123,7 @@ function selectRecipe(recipeName) {
   }
 }
 
-// === Timer Engine Logic ===
+// === TIMER ENGINE LOGIC ===
 // Populate title and reset timer duration for current phase
 function loadPhase() {
   const currentPhase = BAKING_JOURNEY[currentStepIndex];
@@ -213,3 +276,5 @@ function makeChoice(choice) {
     loadPhase();
   }
 }
+
+renderRecipePage();

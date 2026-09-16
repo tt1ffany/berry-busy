@@ -24,35 +24,28 @@
           <h2>Select Recipe</h2>
         </div>
 
-        <!-- <div class="recipe-card" onclick="selectRecipe()">
-          <div class="recipe-icon"></div>
-          <span class="recipe-name"></span>
-        </div> -->
+        <div id="recipe-grid" class="recipe-grid">
+        </div>
 
-        <div class="recipe-grid">
-          <div class="recipe-card" onclick="selectRecipe('Baguette')">
-            <div class="recipe-icon baguette"></div>
-            <span class="recipe-name">Baguette</span>
-          </div>
-
-          <div class="recipe-card" onclick="selectRecipe('Shortcake')">
-            <div class="recipe-icon shortcake"></div>
-            <span class="recipe-name">Shortcake</span>
-          </div>
-
-          <div class="recipe-card" onclick="selectRecipe('Toast')">
-            <div class="recipe-icon toast"></div>
-            <span class="recipe-name">Toast</span>
-          </div>
+        <div class="menu-footer">
+          <button
+            id="prev-page"
+            class="page-btn"
+            onclick="changeRecipePage(-1)"
+          >
+            ←
+          </button>
+          <span id="page-number">1/1</span>
+          <button id="next-page" class="page-btn" onclick="changeRecipePage(1)">
+            →
+          </button>
         </div>
       </div>
 
       <!-- Active Timer -->
       <div id="view-timer" class="view">
         <div class="timer-header">
-          <button class="back-btn" onclick="confirmExitTimer()">
-            ← Menu
-          </button>
+          <button class="back-btn" onclick="confirmExitTimer()">← Menu</button>
           <span id="step-badge">Step 1/5</span>
         </div>
 
@@ -109,8 +102,12 @@
           <h3>Leave Kitchen?</h3>
           <p>Your current baking progress will <strong>reset</strong>.</p>
           <div class="modal-buttons">
-            <button class="modal-btn secondary" onclick="closeModal()">Stay</button>
-            <button class="modal-btn primary" onclick="confirmExit()">Exit</button>
+            <button class="modal-btn secondary" onclick="closeModal()">
+              Stay
+            </button>
+            <button class="modal-btn primary" onclick="confirmExit()">
+              Exit
+            </button>
           </div>
         </div>
       </div>
