@@ -495,3 +495,45 @@ body {
 .branch-btn.secondary:hover {
   background-color: #4a3228;
 }
+
+/* === WINDOW CONTROLS === */
+#window-controls {
+  -webkit-app-region: no-drag;
+  position: absolute;
+  top: 14px;
+  right: 14px;
+  display: flex;
+  gap: 4px;
+  z-index: 1000;
+}
+
+.win-control-btn {
+  -webkit-app-region: no-drag;
+  background: #3a2720;
+  border: 1px solid #573c31;
+  color: #f7e6c4;
+  width: 20px;
+  height: 20px;
+  font-size: 9px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 4px;
+  cursor: pointer;
+  padding: 0;
+  transition: background 0.1s, transform 0.1s;
+}
+
+.win-control-btn:hover {
+  background: #4a3228;
+  border-color: #d4a373;
+}
+
+.win-control-btn:active {
+  transform: scale(0.92);
+}
+
+.win-control-btn.close:hover {
+  background-color: #b85439;
+  border-color: #e07a5f;
+}

@@ -8,7 +8,7 @@ try {
   console.log('Skipping electron-reload');
 }
 
-const { app, BrowserWindow } = require('electron');
+const { app, BrowserWindow, ipcMain } = require('electron');
 
 let mainWindow;
 
@@ -37,4 +37,12 @@ app.on('window-all-closed', () => {
     if (process.platform !== 'darwin') {
         app.quit();
     }
+});
+
+ipcMain.on('minimize-window', () => {
+    if (mainWindow) mainWindow.minimize();
+});
+
+ipcMain.on('close-window', () => {
+    if (mainWindow) mainWindow.close();
 });

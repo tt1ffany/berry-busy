@@ -1,3 +1,5 @@
+const { ipcRenderer } = require('electron');
+
 const RECIPES = [
   { name: "Baguette", icon: "baguette" },
   { name: "Shortcake", icon: "shortcake" },
@@ -54,6 +56,26 @@ function showView(viewId) {
       `[View Manager] Error: Target view #${viewId} does not exist in DOM.`,
     );
   }
+
+  // Only display window controls on start and menu page
+  const windowControls = document.getElementById('window-controls');
+  if (windowControls) {
+    const allowedViews = ['view-start', 'view-menu'];
+
+    if (allowedViews.includes(viewId)) {
+      windowControls.style.display = 'flex';
+    } else {
+      windowControls.style.display = 'none';
+    }
+  }
+}
+
+function minimizeWindow() {
+  ipcRenderer.send('minimize-window');
+}
+
+function closeWindow() {
+  ipcRenderer.send('close-window');
 }
 
 // === MENU RECIPE RETRIEVAL ===
