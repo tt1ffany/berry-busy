@@ -22,12 +22,27 @@ const BAKING_JOURNEY = [
   { id: "enjoy", name: "Enjoy in Cafe", type: "work", minutes: 25 },
 ];
 
+const SOUND_FILES = {
+  none: null,
+  cafe: 'assets/audio/cafe.mp3',
+  rain: 'assets/audio/rain.mp3',
+  waves: 'assets/audio/waves.mp3',
+  forest: 'assets/audio/forest.mp3',
+  campfire: 'assets/audio/campfire.mp3'
+};
+
+const ambienceAudio = new Audio();
+ambienceAudio.loop = true;
+
 let currentRecipePage = 1;
 let currentStepIndex = 0;
 let selectedItem = null;
 let timeRemaining = 0;
 let timerInterval = null;
 let isTimerRunning = false;
+let selectedSoundId = 'none';
+let savedVolume = 0.5;
+let isMuted = false;
 
 // === VIEW MANAGEMENT ===
 function showView(viewId) {
@@ -241,6 +256,7 @@ function advancePhase() {
   }
 }
 
+// === EXIT CONFIRMATION MODAL ===
 function confirmExitTimer() {
   const currentPhase = BAKING_JOURNEY[currentStepIndex];
   const totalSecondsForPhase = currentPhase.minutes * 60;
@@ -270,6 +286,7 @@ function confirmExit() {
   showView("view-menu");
 }
 
+// === BRANCHING AFTER 3RD BREAK ===
 function makeChoice(choice) {
   console.log(`[Branch Choice] Selected: ${choice}`);
 
@@ -296,6 +313,64 @@ function makeChoice(choice) {
     currentStepIndex++;
     showView("view-timer");
     loadPhase();
+  }
+}
+
+// === AUDIO AMBIENCE ===
+function openSoundMenu() {
+  document.getElementById('sound-modal').classList.add('active');
+}
+
+function closeSoundMenu() {
+  document.getElementById('sound-modal').classList.remove('active');
+}
+
+function selectSound(soundId) {
+  selectedSoundId = soundId;
+
+  document.querySelectorAll('.sound-opt-btn').forEach(btn => {
+    const isSelected = btn.dataset.sound === soundId;
+    btn.classList.toggle('active', isSelected);
+  });
+
+  updateAudioForCurrentPhase();
+}
+
+function handleVolumeChange() {
+  savedVolume = parseFloat(val);
+  if (!isMuted) {
+    ambienceAudio.volume = savedVolume;
+  }
+}
+
+function toggleMute() {
+  isMuted = !isMuted;
+  const muteBtn = document.getElementById('mute-btn');
+
+  if (!isMuted) {
+    ambienceAudio.volume = 0;
+    muteBtn.innerText = '🔇';
+  } else {
+    ambienceAudio.volume = savedVolume;
+    muteBtn.innerText = '🔊';
+  }
+}
+
+function updateAudioForCurrentPhase() {
+  const currentPhase = BAKING_JOURNEY[currentStepIndex];
+
+  const isBreakPhase = currentPhase.isBreak || currentPhase.id === 'rest' || currentPhase.id === 'cool';
+
+  if (isBreakPhase || selectedSoundId === 'none') {
+    ambienceAudio.pause();
+  } else {
+    const filePath = SOUND_FILES[selectedSoundId];
+    if (filePath && ambienceAudio.src !== location.href.replace(/index\.html.*/, '') + filePath) {
+      ambienceAudio.src = filePath;
+    }
+
+    ambienceAudio.volume = isMuted ? 0 : savedVolume;
+    ambienceAudio.play().catch(err => console.log('[Audio] Play interrupted or blocked:', err));
   }
 }
 

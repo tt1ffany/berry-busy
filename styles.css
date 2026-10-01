@@ -537,3 +537,76 @@ body {
   background-color: #b85439;
   border-color: #e07a5f;
 }
+
+/* === AUDIO CONTROLS === */
+.audio-control-bar {
+  -webkit-app-region: no-drag;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  background: rgba(30, 19, 15, 0.6);
+  padding: 4px 8px;
+  border-radius: 6px;
+  border: 1px solid #573c31;
+  margin-top: 8px;
+}
+
+.audio-icon-btn {
+  -webkit-app-region: no-drag;
+  background: none;
+  border: none;
+  color: #f7e6c4;
+  font-size: 12px;
+  cursor: pointer;
+  padding: 2px;
+  transition: transform 0.1s;
+}
+
+.audio-icon-btn:active {
+  transform: scale(0.9);
+}
+
+/* Volume slider */
+#volume-slider {
+  -webkit-app-region: no-drag;
+  width: 60px;
+  height: 4px;
+  accent-color: #e07a5f;
+  cursor: pointer;
+}
+
+/* Sound Menu Modal Grid */
+.sound-menu-box {
+  width: 230px;
+}
+
+.sound-options-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 6px;
+  margin: 10px 0 14px 0;
+}
+
+.sound-opt-btn {
+  -webkit-app-region: no-drag;
+  background-color: #4a3228;
+  border: 1px solid #6e4a3c;
+  color: #f7e6c4;
+  padding: 6px 8px;
+  font-size: 10px;
+  border-radius: 4px;
+  cursor: pointer;
+  text-align: left;
+  transition: background 0.15s, border-color 0.15s;
+}
+
+.sound-opt-btn:hover {
+  background-color: #5c3e32;
+}
+
+.sound-opt-btn.active {
+  background-color: #e07a5f;
+  color: #ffffff;
+  border-color: #b85439;
+  font-weight: bold;
+}
