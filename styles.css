@@ -610,3 +610,26 @@ body {
   border-color: #b85439;
   font-weight: bold;
 }
+
+/* === SESSION COMPLETE === */
+#view-complete {
+  background-color: #2b1d19;
+  color: #f7e6c4;
+  box-sizing: border-box;
+  padding: 20px 14px;
+}
+
+.complete-btn {
+  -webkit-app-region: no-drag;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 10px 12px;
+  border-radius: 8px;
+  font-weight: bold;
+  font-size: 12px;
+  cursor: pointer;
+  transition:
+    transform 0.1s,
+    background 0.1s;
+}

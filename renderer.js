@@ -1,4 +1,4 @@
-const { ipcRenderer } = require('electron');
+const { ipcRenderer } = require("electron");
 
 const RECIPES = [
   { name: "Baguette", icon: "baguette" },
@@ -10,7 +10,7 @@ const RECIPES = [
   { name: "Berry Tart", icon: "shortcake" },
   { name: "Honey Toast", icon: "toast" },
   { name: "French Bread", icon: "baguette" },
-]
+];
 const RECIPES_PER_PAGE = 6;
 
 // Sequential baking journey
@@ -19,23 +19,23 @@ const BAKING_JOURNEY = [
   { id: "rest", name: "Let Dough Rest", type: "break", minutes: 5 },
   { id: "bake", name: "Bake in Oven", type: "work", minutes: 25 },
   { id: "cool", name: "Let Cool", type: "break", minutes: 5 },
-  { id: "enjoy", name: "Enjoy in Cafe", type: "work", minutes: 25 },
+  { id: "enjoy", name: "Enjoy in Cafe", type: "work", minutes: 0.05 },
 ];
 
 const SOUND_FILES = {
   none: null,
-  cafe: 'assets/audio/cafe.mp3',
-  rain: 'assets/audio/rain.mp3',
-  waves: 'assets/audio/waves.mp3',
-  forest: 'assets/audio/forest.mp3',
-  campfire: 'assets/audio/campfire.mp3'
+  cafe: "assets/audio/cafe.mp3",
+  rain: "assets/audio/rain.mp3",
+  waves: "assets/audio/waves.mp3",
+  forest: "assets/audio/forest.mp3",
+  campfire: "assets/audio/campfire.mp3",
 };
 
 const ambienceAudio = new Audio();
 ambienceAudio.loop = true;
 
-const studyCompleteSFX = new Audio('assets/audio/study_complete.mp3');
-const breakCompleteSFX = new Audio('assets/audio/break_complete.mp3');
+const studyCompleteSFX = new Audio("assets/audio/study_complete.mp3");
+const breakCompleteSFX = new Audio("assets/audio/break_complete.mp3");
 
 let currentRecipePage = 1;
 let currentStepIndex = 0;
@@ -43,7 +43,7 @@ let selectedItem = null;
 let timeRemaining = 0;
 let timerInterval = null;
 let isTimerRunning = false;
-let selectedSoundId = 'none';
+let selectedSoundId = "none";
 let savedVolume = 0.5;
 let isMuted = false;
 
@@ -76,24 +76,24 @@ function showView(viewId) {
   }
 
   // Only display window controls on start and menu page
-  const windowControls = document.getElementById('window-controls');
+  const windowControls = document.getElementById("window-controls");
   if (windowControls) {
-    const allowedViews = ['view-start', 'view-menu'];
+    const allowedViews = ["view-start", "view-menu", "view-complete"];
 
     if (allowedViews.includes(viewId)) {
-      windowControls.style.display = 'flex';
+      windowControls.style.display = "flex";
     } else {
-      windowControls.style.display = 'none';
+      windowControls.style.display = "none";
     }
   }
 }
 
 function minimizeWindow() {
-  ipcRenderer.send('minimize-window');
+  ipcRenderer.send("minimize-window");
 }
 
 function closeWindow() {
-  ipcRenderer.send('close-window');
+  ipcRenderer.send("close-window");
 }
 
 // === MENU RECIPE RETRIEVAL ===
@@ -111,7 +111,7 @@ function renderRecipePage() {
   const nextButton = document.getElementById("next-page");
 
   const totalPages = Math.ceil(RECIPES.length / RECIPES_PER_PAGE);
-  
+
   const startIndex = (currentRecipePage - 1) * RECIPES_PER_PAGE;
   const visibleRecipes = RECIPES.slice(
     startIndex,
@@ -143,10 +143,7 @@ function changeRecipePage(direction) {
   const totalPages = Math.ceil(RECIPES.length / RECIPES_PER_PAGE);
 
   currentRecipePage += direction;
-  currentRecipePage = Math.max(
-    1,
-    Math.min(currentRecipePage, totalPages),
-  );
+  currentRecipePage = Math.max(1, Math.min(currentRecipePage, totalPages));
 
   renderRecipePage();
 }
@@ -268,7 +265,7 @@ function advancePhase() {
 
 function isBreakPhase(phase) {
   if (!phase) return false;
-  return phase.isBreak || phase.id === 'rest' || phase.id === 'cool';
+  return phase.isBreak || phase.id === "rest" || phase.id === "cool";
 }
 
 // === EXIT CONFIRMATION MODAL ===
@@ -328,24 +325,43 @@ function makeChoice(choice) {
     currentStepIndex++;
     showView("view-timer");
     loadPhase();
+  } else if (choice === "complete") {
+    finishSession();
+  } else if (choice === "exit") {
+    showView("view-start");
   }
 }
 
+// === SESSION COMPLETE ===
+function finishSession() {
+  showView("view-complete");
+  document.getElementById("complete-recipe-name").innerText = selectedItem
+    ? `${selectedItem}`
+    : "";
+  document.getElementById("complete-total-time").innerText =
+    calculateTotalTime();
+  document.getElementById("complete-study-periods").innerText =
+    `${currentStepIndex + 1}/${BAKING_JOURNEY.length}`;
+  // document.getElementById("complete-breaks-taken").innerText = breakCount;
+}
+
+function calculateTotalTime() {}
+
 // === AUDIO AMBIENCE ===
 function openSoundMenu() {
-  document.getElementById('sound-modal').classList.add('active');
+  document.getElementById("sound-modal").classList.add("active");
 }
 
 function closeSoundMenu() {
-  document.getElementById('sound-modal').classList.remove('active');
+  document.getElementById("sound-modal").classList.remove("active");
 }
 
 function selectSound(soundId) {
   selectedSoundId = soundId;
 
-  document.querySelectorAll('.sound-opt-btn').forEach(btn => {
+  document.querySelectorAll(".sound-opt-btn").forEach((btn) => {
     const isSelected = btn.dataset.sound === soundId;
-    btn.classList.toggle('active', isSelected);
+    btn.classList.toggle("active", isSelected);
   });
 
   updateAudioForCurrentPhase();
@@ -358,26 +374,32 @@ function handleVolumeChange() {
 
 function toggleMute() {
   ambienceAudio.muted = !ambienceAudio.muted;
-  const muteBtn = document.getElementById('mute-btn');
+  const muteBtn = document.getElementById("mute-btn");
 
   if (muteBtn) {
-    muteBtn.innerText = ambienceAudio.muted ? '🔇' : '🔊';
+    muteBtn.innerText = ambienceAudio.muted ? "🔇" : "🔊";
   }
 }
 
 function updateAudioForCurrentPhase() {
   const currentPhase = BAKING_JOURNEY[currentStepIndex];
 
-  if (isBreakPhase(currentPhase) || selectedSoundId === 'none') {
+  if (isBreakPhase(currentPhase) || selectedSoundId === "none") {
     ambienceAudio.pause();
   } else {
     const filePath = SOUND_FILES[selectedSoundId];
-    if (filePath && ambienceAudio.src !== location.href.replace(/index\.html.*/, '') + filePath) {
+    if (
+      filePath &&
+      ambienceAudio.src !==
+        location.href.replace(/index\.html.*/, "") + filePath
+    ) {
       ambienceAudio.src = filePath;
     }
 
     ambienceAudio.volume = savedVolume;
-    ambienceAudio.play().catch(err => console.log('[Audio] Play interrupted or blocked:', err));
+    ambienceAudio
+      .play()
+      .catch((err) => console.log("[Audio] Play interrupted or blocked:", err));
   }
 }
 
@@ -386,7 +408,7 @@ function playSFX(sfx) {
   if (ambienceAudio.muted) return;
   sfx.currentTime = 0;
   sfx.volume = savedVolume;
-  sfx.play().catch(err => console.log('[SFX] Audio play error:', err));
+  sfx.play().catch((err) => console.log("[SFX] Audio play error:", err));
 }
 
 renderRecipePage();
